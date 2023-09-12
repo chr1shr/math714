@@ -21,5 +21,5 @@ while h>1e-10:
     # error
     print(h,df,dfexact,abs(df-dfexact))
 
-    # Divide the grid spacing by 10
+    # Divide the grid spacing by 2
     h*=0.5
