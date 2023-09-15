@@ -1,0 +1,5 @@
+# C++ compiler
+cxx=g++
+
+# Compiler flags
+cflags=-Wall -ansi -pedantic -O3
