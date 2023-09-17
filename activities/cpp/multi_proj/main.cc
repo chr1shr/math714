@@ -3,6 +3,6 @@
  
 int main()
 {
-    printf("%g\n", add(3, 4));
+    printf("%d\n",add(3,4));
     return 0;
 }
