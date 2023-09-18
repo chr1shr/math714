@@ -1,11 +1,15 @@
 #include <cstdio>
 #include <cmath>
 #include <cstdlib>
-
-#include "omp.h"
+#include <ctime>
 
 // Declare tolerance as a constant
 const double tol=1e-14;
+
+// Timing function, return the number of seconds from a specified datum
+inline double wtime() {
+    return double(clock())/CLOCKS_PER_SEC;
+}
 
 // Function to consider
 double f(double x,double lam) {
@@ -57,13 +61,13 @@ int main() {
     const double dlam=1.98/(ts-1);
 
     // Initialize table
-    double *xv=new double[ts],t0=omp_get_wtime(),dt;
+    double *xv=new double[ts],t0=wtime(),dt;
 
     // Time the table construction
     for(int l=0;l<ts;l++) xv[l]=ridders(-0.99+dlam*l);
 
     // Print timing results
-    dt=omp_get_wtime()-t0;
+    dt=wtime()-t0;
     printf("Time: %.4g s (total)\nTime: %g microseconds (per value)\n",dt,1e6*dt/ts);
 
     // Print sum of terms. This just removes the compiler warning about the xv
