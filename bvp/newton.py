@@ -9,11 +9,13 @@ def f(x):
 def df(x):
     return cos(x)+3*x*x
 
-# Newton method setup
+# Choose starting point for Newton iteration
 xa=1
 
 for k in range(20):
+
+    # Print out the current iterate, and the function value there
     print("%17.10g %17.10g" % (xa,f(xa)))
 
-    # Newton
+    # Perform Newton step
     xa=xa-f(xa)/df(xa)
