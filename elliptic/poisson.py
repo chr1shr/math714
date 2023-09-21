@@ -17,9 +17,9 @@ hfac=1/(h*h)
 for i in range(m):
     y=(i+1)*h
     for j in range(m):
-        ij=i+m*j
+        ij=m*i+j
 
-        # Derivative matrix
+        # Construct 5-point Laplacian stencil 
         d[ij,ij]=-4*hfac
         if i>0: d[ij,ij-1]=hfac
         if i<m-1: d[ij,ij+1]=hfac
@@ -28,7 +28,7 @@ for i in range(m):
 
         # Source term
         x=(j+1)*h
-        f[ij]=-exp(-(x-0.25)**2-(y-0.5)**2)
+        f[ij]=-exp(-3*((x-0.3)**2+(y-0.7)**2))
 
 # Display the sparsity structure of the derivative matrix
 plt.spy(d)
