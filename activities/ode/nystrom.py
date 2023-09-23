@@ -30,7 +30,7 @@ def nystrom(N,output):
         dk2=f(t+0.5*h,y+0.5*h*dy+h2*0.125*dk1)
         dk3=f(t+h    ,y+    h*dy+h2*  0.5*dk2)
 
-        # Euler step
+        # Update y and its derivative
         y+=h*dy+h2/6*(dk1+2*dk2)
         dy+=h/6*(dk1+4*dk2+dk3)
 
