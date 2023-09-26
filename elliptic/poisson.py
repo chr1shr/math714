@@ -6,7 +6,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
 # Grid setup
-m=32
+m=25
 mm=m*m
 h=1.0/(m+1)
 
@@ -17,7 +17,7 @@ hfac=1/(h*h)
 for i in range(m):
     y=(i+1)*h
     for j in range(m):
-        ij=m*i+j
+        ij=m*j+i
 
         # Construct 5-point Laplacian stencil 
         d[ij,ij]=-4*hfac
@@ -45,8 +45,7 @@ for i in range(m):
 # Plot using Matplotlib
 xa=np.linspace(0,1,m+2)
 mgx,mgy=np.meshgrid(xa,xa);
-fig=plt.figure()
-ax=fig.gca(projection='3d')
+fig,ax=plt.subplots(subplot_kw={"projection": "3d"})
 surf=ax.plot_surface(mgx,mgy,uu,cmap=cm.plasma,rstride=1,cstride=1,linewidth=0)
 ax.set_xlabel('x')
 ax.set_ylabel('y')
