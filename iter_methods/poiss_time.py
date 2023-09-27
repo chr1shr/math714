@@ -49,7 +49,7 @@ def poisson_time(m):
     return (time()-t0,process_time()-p0,d.size*d.itemsize)
 
 # Calculate the error for a range of grid sizes
-m=189
+m=7
 m+=m//7
 while m<250:
     (ttotal,ptotal,mem)=poisson_time(m)
