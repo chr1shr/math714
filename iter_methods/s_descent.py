@@ -42,9 +42,6 @@ while True:
     if np.linalg.norm(r)<eps:
         break        
 
-print(u_k[:k,:])
-print(k)
-
 # Plot results - create contours of phi function
 n=100
 xx=np.linspace(-4,6,n)
