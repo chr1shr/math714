@@ -30,10 +30,11 @@ count=1
 while True:
 
     # First half of conjugate gradient iteration
-    alpha_k=np.dot(r_k.T,r_k)/np.dot(p_k.T,A*p_k)
+    w_k=np.dot(A,p_k)
+    alpha_k=np.dot(r_k.T,r_k)/np.dot(p_k.T,w_k)
     u_k=u_k+alpha_k[0,0]*p_k
     r_k_old=r_k
-    r_k=r_k-alpha_k[0,0]*(A*p_k)
+    r_k=r_k-alpha_k[0,0]*w_k
 
     # Compute relative residual and use to it to check for convergence
     rel_residual=np.linalg.norm(r_k)/norm_rhs
