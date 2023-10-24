@@ -3,46 +3,51 @@ import numpy as np
 from math import exp
 
 # Grid size
-m=256
-u=np.empty((m))
-v=np.empty((m))
-w=np.empty((m))
+m=128
+u=np.empty((m+2))
+v=np.empty((m+2))
+w=np.empty((m+2))
 snaps=100
-iters=10
-z=np.empty((m,snaps+1))
+iters=20
+z=np.empty((m+2,snaps+1))
 
 # PDE-related constants
 c=0.1
-dx=1.0/m
-dt=0.01
+dx=1.0/(m+1)
+dt=0.005
 nu=c*dt/dx
 
 # Initial condition
 def f(x):
-    #    return exp(-20*(x-0.5)**2)
-    if x<0.25 or x>0.75:
-        return 0
-    else:
-        return 1
+    return exp(-160*(x-0.85)**2)
 
 # Set up initial condition at timestep 0 and timestep -1
-for i in range(m):
+for i in range(m+2):
     x=dx*i
     u[i]=f(x)
     w[i]=f(x-dt)
+u[0]=0;w[0]=0
 z[:,0]=u
 
 # Integrate the PDE using the leapfrog method
 for i in range(1,snaps+1):
     for k in range(iters):
+
+        # Use NumPy routines on all m+2 entries to begin with
         v[:]=w-nu*(np.roll(u,-1)-np.roll(u,1))
+
+        # Overwrite zeroth entry with boundary condition
+        v[0]=0
+
+        # Overwrite (m+1)th entry with one-sided finite difference
+        v[m+1]=u[m+1]-nu*(u[m+1]-u[m])
 
         # Cycle pointers to the three arrays
         y=w;w=u;u=v;v=y
     z[:,i]=u
 
 # Output results
-for j in range(m):
+for j in range(m+2):
     e=[str(j*dx)]
     for i in range(snaps+1):
         e.append(str(z[j,i]))
