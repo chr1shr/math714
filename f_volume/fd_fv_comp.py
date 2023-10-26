@@ -66,9 +66,10 @@ else:
     sys.exit()
 
 # Integrate the PDE
+p=1-r-s
 for i in range(1,snaps+1):
     for k in range(iters):
-        v[:]=(1-r-s)*u+r*np.roll(u,1)+s*np.roll(u,-1)
+        v[:]=p*u+r*np.roll(u,1)+s*np.roll(u,-1)
 
         # Cycle pointers to the three arrays
         w=u;u=v;v=w
