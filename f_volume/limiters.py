@@ -6,7 +6,8 @@ import sys
 # Print syntax message
 if len(sys.argv)!=2:
     print("Syntax: ./limiters <mode>\n\n" \
-          "mode=0 for minmod\n")
+          "mode=0 for minmod\n" \
+          "mode=1 for superbee")
     sys.exit()
 
 # Grid size
@@ -34,6 +35,16 @@ for i in range(m):
     u[i]=f(dx*i)
 z[:,0]=u
 
+# Define minmod and maxmod functions, used for slope limiter calculations
+def minmod(a,b):
+    if a*b<=0: return 0
+    elif abs(a)<abs(b): return a
+    else: return b
+def maxmod(a,b):
+    if a*b<=0:return 0
+    elif abs(a)<abs(b): return b
+    else: return a
+
 # Integrate the equation
 f=A*dt/dx
 for i in range(1,snaps+1):
@@ -42,12 +53,22 @@ for i in range(1,snaps+1):
         # Compute limited slopes
         sl=(u-np.roll(u,1))
         sr=np.roll(sl,-1)
-        for j in range(m):
-            if sl[j]*sr[j]<=0:
-                sl[j]=0
-            elif abs(sr[j])<abs(sl[j]):
-                sl[j]=sr[j]
+        if sys.argv[1]=="0":
 
+            # Minmod limiters
+            for j in range(m):
+                sl[j]=minmod(sl[j],sr[j])
+        elif sys.argv[1]=="1":
+
+            # Superbee limiters
+            for j in range(m):
+                sl[j]=maxmod(minmod(2*sr[j],sl[j]),minmod(sr[j],2*sl[j]))
+
+        else:
+            print("Unknown mode")
+            sys.exit()
+
+        # Compute update using the limited slopes
         v[:]=u+f*(np.roll(u,1)-u)-0.5*f*(1-f)*(sl-np.roll(sl,1))
         u,v=v,u
     z[:,i]=u
