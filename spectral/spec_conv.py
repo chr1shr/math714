@@ -22,33 +22,20 @@ def df(z):
     return 0.2*cos(z)+2*sin(2*z)/(2+cos(2*z))**2
 
 # Assemble derivative matrix
-n=102
-D=diff_matrix(n,int(sys.argv[1]))
+def diff_error(n):
 
-# Look at the fixed matrix
-plt.spy(D)
-plt.show()
+    D=diff_matrix(n,int(sys.argv[1]))
 
-# Plot function
-x=np.linspace(0,2*pi,n,endpoint=False)
-y=np.array([f(xx) for xx in x])
-plt.xlabel('x')
-plt.ylabel('f(x)')
-plt.plot(x,y)
-plt.show()
+    x=np.linspace(0,2*pi,n,endpoint=False)
+    y=np.array([f(xx) for xx in x])
 
-# Calculate derivative and plot
-dy=np.dot(D,y)
-dya=np.array([df(xx) for xx in x])
-plt.xlabel('x')
-plt.plot(x,dy,label="f' numerical")
-plt.plot(x,dya,label="f' analytical")
-plt.legend()
-plt.show()
+    # Calculate derivative and plot
+    dy=np.dot(D,y)
+    err=np.array([dy[i] - df(x[i]) for i in range(n)])
 
-# Plot error
-err=np.array([dy[i] - df(x[i]) for i in range(n)])
-plt.xlabel('x')
-plt.ylabel('Derivative error')
-plt.plot(x,err)
-plt.show()
+    return np.linalg.norm(2*pi/n*err)
+
+n=10
+while n<30000:
+    print(n,2*pi/n,diff_error(n))
+    n+=2*(n//4)
