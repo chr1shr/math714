@@ -31,7 +31,7 @@ def diff_error(n):
 
     # Calculate derivative and plot
     dy=np.dot(D,y)
-    err=np.array([dy[i] - df(x[i]) for i in range(n)])
+    err=np.array([dy[i]-df(x[i]) for i in range(n)])
 
     return np.linalg.norm(2*pi/n*err)
 
