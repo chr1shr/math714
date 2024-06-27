@@ -1,5 +1,5 @@
 # UW–Madison Math/CS 714: Code examples
-Math/CS 514 is a graduate course taught at the University of Wisconsin, Madison on methods of computational mechanics.
+Math/CS 714 is a graduate course taught at the University of Wisconsin, Madison on methods of computational mechanics.
 
 The codes are primarily written in Python and make use of several
 well-established libraries
