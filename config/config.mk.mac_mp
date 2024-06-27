@@ -1,8 +1,8 @@
 # C++ compiler
-cxx=g++-mp-12 -fopenmp
+cxx=g++-mp-13 -fopenmp
 
 # Compilation flags
-cflags=-Wall -ansi -pedantic -O3
+cflags=-Wall -Wno-deprecated-declarations -ansi -pedantic -O3
 
 # BLAS/LAPACK flags for linear algebra
 lp_lflags=-framework Accelerate
