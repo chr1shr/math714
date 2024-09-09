@@ -58,7 +58,7 @@ logarithmic plot. Gnuplot can be used to fit the data for *h* &gt;
 10<sup>-5</sup> with linear regression, using the following commands:
 ```Gnuplot
 f(x)=a*x+b
-fit [log(1e-5):*] 'out' u (log($1)):(log($4)) via a,b
+fit [log(1e-5):*] f(x) 'out' u (log($1)):(log($4)) via a,b
 ```
 The section `(log($1)):(log($4))` tells Gnuplot to fit the line to the
 logarithms of the data in columns 1 and 4. The initial section `[log(1e-5):*]`
@@ -77,7 +77,7 @@ convergence data. Note that it is up the user to determine the appropriate
 range over which to fit the results. In this example, it would *not* be appropriate
 to perform linear regression over all the data, using the following commands:
 ```Gnuplot
-fit 'out' u (log($1)):(log($4)) via a,b
+fit f(x) 'out' u (log($1)):(log($4)) via a,b
 plot exp(f(log(x))) w l t 'Power law fit', 'out' u 1:4 w p pt 7 t 'Data'
 ```
 In this case, the line fits the data poorly. Here *a* is computed as 0.472,
