@@ -18,23 +18,23 @@ for i in range(nn-1):
 A=sp.diags([cen,hor,hor,ver,ver],[0,1,-1,nn,-nn])
 
 # Right hand side: a vector of ones
-rhs=np.ones((nn*nn,1))
+rhs=np.ones(nn*nn)
 norm_rhs=np.linalg.norm(rhs)
 
 # Solve for solution using the conjugate gradient method
 TOL=1.e-4
-u_k=np.zeros((nn*nn,1))
+u_k=np.zeros(nn*nn)
 r_k=rhs
 p_k=r_k
 count=1
 while True:
 
     # First half of conjugate gradient iteration
-    w_k=np.dot(A,p_k)
+    w_k=A*p_k
     alpha_k=np.dot(r_k.T,r_k)/np.dot(p_k.T,w_k)
-    u_k=u_k+alpha_k[0,0]*p_k
+    u_k=u_k+alpha_k*p_k
     r_k_old=r_k
-    r_k=r_k-alpha_k[0,0]*w_k
+    r_k=r_k-alpha_k*w_k
 
     # Compute relative residual and use to it to check for convergence
     rel_residual=np.linalg.norm(r_k)/norm_rhs
@@ -44,7 +44,7 @@ while True:
 
     # Second half of conjugate gradient iteration
     beta_k=np.dot(r_k.T,r_k)/np.dot(r_k_old.T,r_k_old)
-    p_k=r_k+beta_k[0,0]*p_k
+    p_k=r_k+beta_k*p_k
     count+=1
 
 # Print grid spacing and condition number. This may get very expensive for a
@@ -56,7 +56,7 @@ print("h=%g, condition number=%g\n" % (h,np.linalg.cond(A.todense())))
 uu=np.zeros((n,n))
 for i in range(nn):
     for j in range(nn):
-        uu[i+1,j+1]=u_k[i+nn*j,0]
+        uu[i+1,j+1]=u_k[i+nn*j]
 
 # Plot the solution
 xa=np.linspace(0,1,n)
