@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 import numpy as np
 
-# Computes the (n+1) Chebyshev-Lobatto points at the associate derivative matrix
+# Computes the (n+1) Chebyshev-Lobatto points at the associated derivative
+# matrix
 def cheb(n):
 
     # Chebyshev-Lobatto points

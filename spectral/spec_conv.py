@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import matplotlib.pyplot as plt
 import numpy as np
 from diff_matrices import diff_matrix
 from math import *
