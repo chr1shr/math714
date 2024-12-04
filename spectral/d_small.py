@@ -22,7 +22,7 @@ print("Function values:\n",y)
 # argument is just an arbitrary grid spacing, to get integers for the wave
 # numbers.
 wa=np.fft.fftfreq(n,1./n)
-print("\nMode frequencies:\n",wa);
+print("\nWave numbers:\n",wa);
 
 # Compute the complex FFT in the z array
 z=np.fft.fft(y)
